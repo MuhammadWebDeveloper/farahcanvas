@@ -13,7 +13,7 @@ connectDB();
 // Middleware
 app.use(helmet());
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://your-frontend-domain.vercel.app', 'https://farahcanvas.netlify.app/'],
+    origin: ['http://localhost:5173', 'https://farahcanvas.vercel.app/', 'https://farahcanvas.netlify.app/'],
     credentials: true
 }));
 app.use(morgan('dev'));
