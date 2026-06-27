@@ -1,4 +1,4 @@
-const Artwork = require('./User.models');
+const Artwork = require('../User/User.models.js');
 const cloudinary = require('../config/cloudinary');
 
 // @desc    Get all artworks
@@ -89,6 +89,7 @@ exports.createArtwork = async (req, res) => {
       description: req.body.description,
       category: req.body.category,
       image: imageUrl,
+      sourceUrl: req.body.sourceUrl || '',
       cloudinaryId: cloudinaryId,
     };
 
@@ -119,7 +120,12 @@ exports.createArtwork = async (req, res) => {
 // @desc    Update artwork
 exports.updateArtwork = async (req, res) => {
   try {
-    let updateData = { ...req.body };
+    let updateData = { 
+      title: req.body.title,
+      description: req.body.description,
+      category: req.body.category,
+      sourceUrl: req.body.sourceUrl || '',
+    };
 
     // If new file uploaded, update image
     if (req.file) {
@@ -131,6 +137,9 @@ exports.updateArtwork = async (req, res) => {
       if (oldArtwork && oldArtwork.cloudinaryId) {
         await cloudinary.uploader.destroy(oldArtwork.cloudinaryId);
       }
+    } else if (req.body.image) {
+      // If image URL is provided in body
+      updateData.image = req.body.image;
     }
 
     const artwork = await Artwork.findByIdAndUpdate(
@@ -217,3 +226,4 @@ exports.getCategories = async (req, res) => {
     });
   }
 };
+

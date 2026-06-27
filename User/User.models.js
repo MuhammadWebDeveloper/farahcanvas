@@ -19,14 +19,19 @@ const artworkSchema = new mongoose.Schema(
             required: [true, 'Category is required'],
             enum: {
                 values: ['Portrait', 'Landscape', 'Abstract', 'Still Life'],
-                message: "{VALUE} is not a supported category {Portrait', 'Landscape', 'Abstract', 'Still Life}"
+                message: "{VALUE} is not a supported category",
             },
         },
         image: {
             type: String,
             required: [true, 'Image URL is required'],
             trim: true,
-        }
+        },
+        sourceUrl: {
+            type: String,
+            trim: true,
+            default: '',
+        },
     },
     {
         timestamps: true,
